@@ -5,6 +5,7 @@ import {
   ChevronDown,
   ArrowRight,
 } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -28,16 +29,25 @@ export default function Navbar() {
     ? "text-[#111020] hover:text-[#1D5FA7]"
     : "text-white hover:text-white/80";
 
+  const closeMobileMenu = () => {
+    setIsOpen(false);
+    setServicesOpen(false);
+  };
+
   return (
     <header className="fixed left-0 right-0 top-0 z-50">
 
+      {/* =========================
+          NAVBAR
+      ========================== */}
+
       <nav
-  className={`transition-all duration-500 ${
-    scrolled
-      ? "bg-white/95 shadow-lg shadow-[#111020]/5 backdrop-blur-xl"
-      : "bg-transparent"
-  }`}
->
+        className={`transition-all duration-500 ${
+          scrolled
+            ? "bg-white/95 shadow-lg shadow-[#111020]/5 backdrop-blur-xl"
+            : "bg-transparent"
+        }`}
+      >
 
         <div className="mx-auto flex h-[82px] max-w-7xl items-center justify-between px-5 sm:px-6 lg:px-8">
 
@@ -45,44 +55,52 @@ export default function Navbar() {
               LOGO
           ========================== */}
 
-          <a
-  href="#home"
-  className="group flex items-center gap-2.5"
->
-  {/* Logo */}
+          <Link
+            to="/"
+            onClick={closeMobileMenu}
+            className="group flex items-center gap-2.5"
+          >
 
-  <div className="flex h-12 w-[70px] shrink-0 items-center justify-center rounded-lg bg-white px-2 shadow-md ring-1 ring-black/5 sm:h-14 sm:w-[78px]">
-    <img
-      src="/vr-logo.png"
-      alt="VR Group"
-      className="h-full w-full object-contain transition-transform duration-300 group-hover:scale-105"
-    />
-  </div>
+            {/* Logo */}
 
-  {/* Brand Name */}
+            <div className="flex h-12 w-[70px] shrink-0 items-center justify-center rounded-lg bg-white px-2 shadow-md ring-1 ring-black/5 sm:h-14 sm:w-[78px]">
 
-  <div className="leading-none">
-    <h1
-      className={`font-serif text-base font-semibold tracking-tight transition-colors duration-500 sm:text-xl ${
-        scrolled
-          ? "text-[#111020]"
-          : "text-white"
-      }`}
-    >
-      VR Group
-    </h1>
+              <img
+                src="/vr-logo.png"
+                alt="VR Group"
+                className="h-full w-full object-contain transition-transform duration-300 group-hover:scale-105"
+              />
 
-    <p
-      className={`mt-1 text-[6px] font-semibold uppercase tracking-[0.18em] transition-colors duration-500 sm:text-[8px] sm:tracking-[0.25em] ${
-        scrolled
-          ? "text-[#1D5FA7]"
-          : "text-white/80"
-      }`}
-    >
-      Your Future. Our Guidance.
-    </p>
-  </div>
-</a>
+            </div>
+
+
+            {/* Brand Name */}
+
+            <div className="leading-none">
+
+              <h1
+                className={`font-serif text-base font-semibold tracking-tight transition-colors duration-500 sm:text-xl ${
+                  scrolled
+                    ? "text-[#111020]"
+                    : "text-white"
+                }`}
+              >
+                VR Group
+              </h1>
+
+              <p
+                className={`mt-1 text-[6px] font-semibold uppercase tracking-[0.18em] transition-colors duration-500 sm:text-[8px] sm:tracking-[0.25em] ${
+                  scrolled
+                    ? "text-[#1D5FA7]"
+                    : "text-white/80"
+                }`}
+              >
+                Your Future. Our Guidance.
+              </p>
+
+            </div>
+
+          </Link>
 
 
           {/* =========================
@@ -93,8 +111,8 @@ export default function Navbar() {
 
             {/* HOME */}
 
-            <a
-              href="#home"
+            <Link
+              to="/"
               className={`group relative text-sm font-medium transition-colors duration-300 ${navText}`}
             >
               Home
@@ -106,13 +124,13 @@ export default function Navbar() {
                     : "bg-white"
                 }`}
               />
-            </a>
+            </Link>
 
 
             {/* ABOUT */}
 
             <a
-              href="#about"
+              href="/#about"
               className={`text-sm font-medium transition-colors duration-300 ${navText}`}
             >
               About Us
@@ -130,28 +148,35 @@ export default function Navbar() {
             >
 
               <button
+                type="button"
                 className={`flex items-center gap-1.5 text-sm font-medium transition-colors duration-300 ${navText}`}
               >
+
                 Services
 
                 <ChevronDown
                   size={15}
                   className={`transition-transform duration-300 ${
-                    servicesOpen ? "rotate-180" : ""
+                    servicesOpen
+                      ? "rotate-180"
+                      : ""
                   }`}
                 />
+
               </button>
 
 
               {servicesOpen && (
+
                 <div className="absolute left-1/2 top-full mt-5 w-72 -translate-x-1/2 rounded-2xl border border-[#111020]/10 bg-white p-2 shadow-2xl">
 
                   {/* Study Abroad */}
 
                   <a
-                    href="#study-abroad"
+                    href="/#study-abroad"
                     className="group block rounded-xl px-4 py-3 transition-all duration-200 hover:bg-[#F5F7FA]"
                   >
+
                     <div className="flex items-center justify-between">
 
                       <p className="text-sm font-semibold text-[#111020]">
@@ -168,15 +193,17 @@ export default function Navbar() {
                     <p className="mt-1 text-xs text-[#5F6470]">
                       Universities, applications & visa guidance
                     </p>
+
                   </a>
 
 
                   {/* Education Loans */}
 
                   <a
-                    href="#loans"
+                    href="/#loans"
                     className="group block rounded-xl px-4 py-3 transition-all duration-200 hover:bg-[#F5F7FA]"
                   >
+
                     <div className="flex items-center justify-between">
 
                       <p className="text-sm font-semibold text-[#111020]">
@@ -193,15 +220,18 @@ export default function Navbar() {
                     <p className="mt-1 text-xs text-[#5F6470]">
                       Financial assistance & loan guidance
                     </p>
+
                   </a>
 
 
                   {/* Real Estate */}
 
-                  <a
-                    href="#real-estate"
+                  <Link
+                    to="/real-estate/projects"
+                    onClick={() => setServicesOpen(false)}
                     className="group block rounded-xl px-4 py-3 transition-all duration-200 hover:bg-[#F5F7FA]"
                   >
+
                     <div className="flex items-center justify-between">
 
                       <p className="text-sm font-semibold text-[#111020]">
@@ -218,9 +248,11 @@ export default function Navbar() {
                     <p className="mt-1 text-xs text-[#5F6470]">
                       Buy, sell & property assistance
                     </p>
-                  </a>
+
+                  </Link>
 
                 </div>
+
               )}
 
             </div>
@@ -228,18 +260,18 @@ export default function Navbar() {
 
             {/* PROPERTIES */}
 
-            <a
-              href="#properties"
+            <Link
+              to="/real-estate/projects"
               className={`text-sm font-medium transition-colors duration-300 ${navText}`}
             >
               Properties
-            </a>
+            </Link>
 
 
             {/* CONTACT */}
 
             <a
-              href="#contact"
+              href="/#contact"
               className={`text-sm font-medium transition-colors duration-300 ${navText}`}
             >
               Contact
@@ -249,25 +281,27 @@ export default function Navbar() {
 
 
           {/* =========================
-              CTA
+              DESKTOP CTA
           ========================== */}
 
           <div className="hidden lg:block">
 
             <a
-              href="#contact"
+              href="/#contact"
               className={`group inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-all duration-300 ${
                 scrolled
                   ? "bg-[#1D5FA7] text-white shadow-md shadow-[#1D5FA7]/20 hover:-translate-y-0.5 hover:bg-[#1474C4] hover:shadow-lg"
                   : "border border-white/40 bg-white/10 text-white backdrop-blur-md hover:bg-white hover:text-[#111020]"
               }`}
             >
+
               Book Consultation
 
               <ArrowRight
                 size={16}
                 className="transition-transform duration-300 group-hover:translate-x-1"
               />
+
             </a>
 
           </div>
@@ -285,12 +319,15 @@ export default function Navbar() {
                 : "text-white hover:bg-white/10"
             }`}
             aria-label="Toggle menu"
+            type="button"
           >
+
             {isOpen ? (
               <X size={25} />
             ) : (
               <Menu size={25} />
             )}
+
           </button>
 
         </div>
@@ -301,47 +338,100 @@ export default function Navbar() {
         ========================== */}
 
         {isOpen && (
+
           <div className="border-t border-[#111020]/10 bg-white px-5 py-5 shadow-xl lg:hidden">
 
             <div className="mx-auto max-w-7xl space-y-1">
 
-              {[
-                ["#home", "Home"],
-                ["#about", "About Us"],
-                ["#study-abroad", "Study Abroad"],
-                ["#loans", "Education Loans"],
-                ["#real-estate", "Real Estate"],
-                ["#properties", "Properties"],
-                ["#contact", "Contact"],
-              ].map(([href, label]) => (
-                <a
-                  key={href}
-                  href={href}
-                  onClick={() => setIsOpen(false)}
-                  className="block rounded-lg px-4 py-3 font-medium text-[#111020] transition-colors hover:bg-[#F5F7FA] hover:text-[#1D5FA7]"
-                >
-                  {label}
-                </a>
-              ))}
+              <Link
+                to="/"
+                onClick={closeMobileMenu}
+                className="block rounded-lg px-4 py-3 font-medium text-[#111020] transition-colors hover:bg-[#F5F7FA] hover:text-[#1D5FA7]"
+              >
+                Home
+              </Link>
+
+
+              <a
+                href="/#about"
+                onClick={closeMobileMenu}
+                className="block rounded-lg px-4 py-3 font-medium text-[#111020] transition-colors hover:bg-[#F5F7FA] hover:text-[#1D5FA7]"
+              >
+                About Us
+              </a>
+
+
+              <a
+                href="/#study-abroad"
+                onClick={closeMobileMenu}
+                className="block rounded-lg px-4 py-3 font-medium text-[#111020] transition-colors hover:bg-[#F5F7FA] hover:text-[#1D5FA7]"
+              >
+                Study Abroad
+              </a>
+
+
+              <a
+                href="/#loans"
+                onClick={closeMobileMenu}
+                className="block rounded-lg px-4 py-3 font-medium text-[#111020] transition-colors hover:bg-[#F5F7FA] hover:text-[#1D5FA7]"
+              >
+                Education Loans
+              </a>
+
+
+              <Link
+                to="/real-estate/projects"
+                onClick={closeMobileMenu}
+                className="block rounded-lg px-4 py-3 font-medium text-[#111020] transition-colors hover:bg-[#F5F7FA] hover:text-[#1D5FA7]"
+              >
+                Real Estate
+              </Link>
+
+
+              <Link
+                to="/real-estate/projects"
+                onClick={closeMobileMenu}
+                className="block rounded-lg px-4 py-3 font-medium text-[#111020] transition-colors hover:bg-[#F5F7FA] hover:text-[#1D5FA7]"
+              >
+                Properties
+              </Link>
+
+
+              <a
+                href="/#contact"
+                onClick={closeMobileMenu}
+                className="block rounded-lg px-4 py-3 font-medium text-[#111020] transition-colors hover:bg-[#F5F7FA] hover:text-[#1D5FA7]"
+              >
+                Contact
+              </a>
+
+
+              {/* CTA */}
 
               <div className="pt-3">
 
                 <a
-                  href="#contact"
-                  onClick={() => setIsOpen(false)}
+                  href="/#contact"
+                  onClick={closeMobileMenu}
                   className="flex items-center justify-center gap-2 rounded-full bg-[#1D5FA7] px-6 py-3.5 font-semibold text-white transition-colors hover:bg-[#1474C4]"
                 >
+
                   Book Consultation
+
                   <ArrowRight size={17} />
+
                 </a>
 
               </div>
 
             </div>
+
           </div>
+
         )}
 
       </nav>
+
     </header>
   );
 }
