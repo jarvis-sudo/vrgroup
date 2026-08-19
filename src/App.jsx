@@ -6,6 +6,7 @@ import Navbar from "./components/Navbar";
 import RealEstateProjects from "./pages/RealEstateProjects";
 import Home from "./pages/Home";
 import Footer from "./components/Footer";
+import PropertyDetails from "./pages/PropertyDetails"
 
 
 
@@ -26,6 +27,11 @@ function App() {
         <Route
           path="/real-estate/projects"
           element={<RealEstateProjects />}
+        />
+         {/* Property Details */}
+        <Route
+          path="/real-estate/property/:id"
+          element={<PropertyDetails />}
         />
 
       </Routes>

@@ -1,44 +1,596 @@
-import React, { useState } from "react";
+
+
+import React, { useMemo, useState } from "react";
+import { Link } from "react-router-dom";
+
 import {
   ArrowRight,
+  ArrowUpRight,
   Building2,
+  CheckCircle2,
+  Home,
+  Landmark,
   MapPin,
-  X,
-  Phone,
-  MessageCircle,
+  Trees,
 } from "lucide-react";
 
-import ProjectCard from "../components/ProjectCard";
-import { projects } from "../data/projects";
+/* =========================================================
+   CATEGORIES
+========================================================= */
+
+const categories = [
+  {
+    id: "all",
+    name: "All Properties",
+    image: "/buildings.jpg",
+    icon: Building2,
+  },
+  {
+    id: "apartments",
+    name: "Flats & Apartments",
+    image: "/apartments.avif",
+    icon: Building2,
+  },
+  {
+    id: "villas",
+    name: "Villas",
+    image: "/villa.webp",
+    icon: Home,
+  },
+  {
+    id: "plots",
+    name: "Residential Plots",
+    image: "/plots.avif",
+    icon: MapPin,
+  },
+  {
+    id: "commercial",
+    name: "Commercial Spaces",
+    image: "/commercial-space.png",
+    icon: Landmark,
+  },
+  {
+    id: "houses",
+    name: "Independent Houses",
+    image: "/house.webp",
+    icon: Home,
+  },
+  {
+    id: "farm",
+    name: "Farm Lands",
+    image: "/farmland.webp",
+    icon: Trees,
+  },
+];
+
+/* =========================================================
+   PROPERTY DATA
+========================================================= */
+
+const properties = [
+  /* =======================================================
+     FLATS & APARTMENTS
+  ======================================================= */
+
+  {
+    id: 1,
+    title: "Cyber Homes",
+    category: "apartments",
+    categoryName: "Flats & Apartments",
+    location: "Kokapet, Hyderabad",
+    price: "₹1.25 Cr",
+    details: "3 BHK • 3 Baths • 1,850 sq.ft",
+    image: "/apartments.avif",
+
+    description:
+      "A premium residential apartment opportunity in Kokapet, Hyderabad, designed for comfortable modern living with excellent connectivity to major parts of the city.",
+
+    bedrooms: "3 BHK",
+    bathrooms: "3",
+    area: "1,850 sq.ft",
+    propertyType: "Apartment",
+
+    highlights: [
+      "Premium residential community",
+      "Modern architecture",
+      "Excellent connectivity",
+      "Spacious living areas",
+      "Family-friendly environment",
+      "Close to major IT corridors",
+    ],
+  },
+  /*
+
+  {
+    id: 2,
+    title: "Luxury 2 BHK Apartments",
+    category: "apartments",
+    categoryName: "Flats & Apartments",
+    location: "Narsingi, Hyderabad",
+    price: "₹85 Lakhs",
+    details: "2 BHK • 2 Baths • 1,350 sq.ft",
+    image: "/apartments.avif",
+
+    description:
+      "Well-designed 2 BHK apartments located in Narsingi with convenient access to schools, workplaces, shopping and major roads.",
+
+    bedrooms: "2 BHK",
+    bathrooms: "2",
+    area: "1,350 sq.ft",
+    propertyType: "Apartment",
+
+    highlights: [
+      "Prime Narsingi location",
+      "Well-planned interiors",
+      "Excellent road connectivity",
+      "Modern amenities",
+      "Ideal for families",
+      "Strong investment potential",
+    ],
+  },
+
+  {
+    id: 3,
+    title: "Premium 4 BHK Apartments",
+    category: "apartments",
+    categoryName: "Flats & Apartments",
+    location: "Financial District, Hyderabad",
+    price: "₹1.85 Cr",
+    details: "4 BHK • 4 Baths • 2,650 sq.ft",
+    image: "/apartments.avif",
+
+    description:
+      "Spacious 4 BHK apartments in the Financial District offering a premium lifestyle and convenient access to Hyderabad's major business hubs.",
+
+    bedrooms: "4 BHK",
+    bathrooms: "4",
+    area: "2,650 sq.ft",
+    propertyType: "Apartment",
+
+    highlights: [
+      "Located in Financial District",
+      "Large floor plans",
+      "Premium residential development",
+      "Excellent connectivity",
+      "Luxury lifestyle",
+      "Ideal for premium buyers",
+    ],
+  },
+
+  
+
+  {
+    id: 4,
+    title: "Luxury Villa Community",
+    category: "villas",
+    categoryName: "Villas",
+    location: "Tellapur, Hyderabad",
+    price: "₹2.40 Cr",
+    details: "4 BHK • 4 Baths • 3,200 sq.ft",
+    image: "/villa.webp",
+
+    description:
+      "A premium villa opportunity in Tellapur offering spacious interiors, privacy and a comfortable community lifestyle.",
+
+    bedrooms: "4 BHK",
+    bathrooms: "4",
+    area: "3,200 sq.ft",
+    propertyType: "Villa",
+
+    highlights: [
+      "Premium villa community",
+      "Spacious floor plans",
+      "Private living spaces",
+      "Gated community",
+      "Modern infrastructure",
+      "Excellent location",
+    ],
+  },
+
+  {
+    id: 5,
+    title: "Premium Independent Villa",
+    category: "villas",
+    categoryName: "Villas",
+    location: "Kollur, Hyderabad",
+    price: "₹1.95 Cr",
+    details: "4 BHK • 4 Baths • 2,850 sq.ft",
+    image: "/villa.webp",
+
+    description:
+      "Beautiful independent villa opportunity in Kollur with spacious rooms and a peaceful residential environment.",
+
+    bedrooms: "4 BHK",
+    bathrooms: "4",
+    area: "2,850 sq.ft",
+    propertyType: "Villa",
+
+    highlights: [
+      "Independent villa",
+      "Peaceful location",
+      "Spacious interiors",
+      "Gated surroundings",
+      "Good connectivity",
+      "Ideal for families",
+    ],
+  },
+
+  {
+    id: 6,
+    title: "Modern Luxury Villas",
+    category: "villas",
+    categoryName: "Villas",
+    location: "Mokila, Hyderabad",
+    price: "₹2.75 Cr",
+    details: "5 BHK • 5 Baths • 3,800 sq.ft",
+    image: "/villa.webp",
+
+    description:
+      "Large luxury villas in Mokila offering generous living spaces and a premium residential lifestyle.",
+
+    bedrooms: "5 BHK",
+    bathrooms: "5",
+    area: "3,800 sq.ft",
+    propertyType: "Villa",
+
+    highlights: [
+      "Luxury villa",
+      "Large built-up area",
+      "Premium neighbourhood",
+      "Spacious rooms",
+      "Private lifestyle",
+      "Long-term investment opportunity",
+    ],
+  },
+
+ 
+
+  {
+    id: 7,
+    title: "Premium Residential Plots",
+    category: "plots",
+    categoryName: "Residential Plots",
+    location: "Shadnagar, Hyderabad",
+    price: "₹45 Lakhs",
+    details: "200 Sq. Yards • Gated Community",
+    image: "/open-plots.avif",
+
+    description:
+      "Premium residential plots suitable for building your future home or making a long-term real estate investment.",
+
+    bedrooms: "-",
+    bathrooms: "-",
+    area: "200 Sq. Yards",
+    propertyType: "Residential Plot",
+
+    highlights: [
+      "Residential plots",
+      "Gated community",
+      "Good road connectivity",
+      "Suitable for future construction",
+      "Investment opportunity",
+      "Growing location",
+    ],
+  },
+
+  {
+    id: 8,
+    title: "HMDA Approved Plots",
+    category: "plots",
+    categoryName: "Residential Plots",
+    location: "Maheshwaram, Hyderabad",
+    price: "₹38 Lakhs",
+    details: "180 Sq. Yards • HMDA Approved",
+    image: "/open-plots.avif",
+
+    description:
+      "Residential plots in Maheshwaram offering an opportunity for home construction and long-term investment.",
+
+    bedrooms: "-",
+    bathrooms: "-",
+    area: "180 Sq. Yards",
+    propertyType: "Residential Plot",
+
+    highlights: [
+      "HMDA approved",
+      "Residential development",
+      "Good connectivity",
+      "Growing location",
+      "Investment potential",
+      "Suitable for home construction",
+    ],
+  },
+
+  {
+    id: 9,
+    title: "Premium Gated Plots",
+    category: "plots",
+    categoryName: "Residential Plots",
+    location: "Yadagirigutta, Telangana",
+    price: "₹32 Lakhs",
+    details: "200 Sq. Yards • Gated Community",
+    image: "/open-plots.avif",
+
+    description:
+      "Well-planned residential plots in a gated community, suitable for future residential development.",
+
+    bedrooms: "-",
+    bathrooms: "-",
+    area: "200 Sq. Yards",
+    propertyType: "Residential Plot",
+
+    highlights: [
+      "Gated community",
+      "Residential plots",
+      "Planned development",
+      "Good connectivity",
+      "Affordable investment",
+      "Future growth potential",
+    ],
+  },
+
+  
+
+  {
+    id: 10,
+    title: "Premium Office Space",
+    category: "commercial",
+    categoryName: "Commercial Spaces",
+    location: "Gachibowli, Hyderabad",
+    price: "₹1.80 Cr",
+    details: "1,800 sq.ft • Commercial",
+    image: "/commercial-space.png",
+
+    description:
+      "Premium commercial office space located in Gachibowli, suitable for businesses and investors looking for a strategic location.",
+
+    bedrooms: "-",
+    bathrooms: "-",
+    area: "1,800 sq.ft",
+    propertyType: "Commercial",
+
+    highlights: [
+      "Prime commercial location",
+      "Suitable for offices",
+      "Excellent connectivity",
+      "Business-friendly location",
+      "Investment opportunity",
+      "Close to IT corridor",
+    ],
+  },
+
+  {
+    id: 11,
+    title: "Prime Retail Space",
+    category: "commercial",
+    categoryName: "Commercial Spaces",
+    location: "Kondapur, Hyderabad",
+    price: "₹2.10 Cr",
+    details: "1,500 sq.ft • Retail",
+    image: "/commercial-space.pngg",
+
+    description:
+      "Prime retail property in Kondapur suitable for businesses looking for visibility and strong connectivity.",
+
+    bedrooms: "-",
+    bathrooms: "-",
+    area: "1,500 sq.ft",
+    propertyType: "Commercial",
+
+    highlights: [
+      "Prime retail location",
+      "Good visibility",
+      "High-growth neighbourhood",
+      "Excellent connectivity",
+      "Business opportunity",
+      "Investment potential",
+    ],
+  },
+
+  {
+    id: 12,
+    title: "Commercial Investment Property",
+    category: "commercial",
+    categoryName: "Commercial Spaces",
+    location: "Madhapur, Hyderabad",
+    price: "₹3.25 Cr",
+    details: "2,500 sq.ft • Commercial",
+    image: "/commercial-space.png",
+
+    description:
+      "A commercial investment opportunity in Madhapur located close to major business and technology hubs.",
+
+    bedrooms: "-",
+    bathrooms: "-",
+    area: "2,500 sq.ft",
+    propertyType: "Commercial",
+
+    highlights: [
+      "Madhapur location",
+      "Strong commercial demand",
+      "Large floor area",
+      "Business-friendly location",
+      "Investment opportunity",
+      "Excellent connectivity",
+    ],
+  },
+
+  
+
+  {
+    id: 13,
+    title: "Premium Independent House",
+    category: "houses",
+    categoryName: "Independent Houses",
+    location: "Manikonda, Hyderabad",
+    price: "₹1.65 Cr",
+    details: "4 BHK • 4 Baths • 2,500 sq.ft",
+    image: "/house.webp",
+
+    description:
+      "Spacious independent house in Manikonda offering comfortable family living with excellent access to nearby areas.",
+
+    bedrooms: "4 BHK",
+    bathrooms: "4",
+    area: "2,500 sq.ft",
+    propertyType: "Independent House",
+
+    highlights: [
+      "Independent house",
+      "Spacious interiors",
+      "Family-friendly neighbourhood",
+      "Good connectivity",
+      "Residential location",
+      "Long-term value",
+    ],
+  },
+
+  {
+    id: 14,
+    title: "Spacious Family Home",
+    category: "houses",
+    categoryName: "Independent Houses",
+    location: "LB Nagar, Hyderabad",
+    price: "₹1.15 Cr",
+    details: "3 BHK • 3 Baths • 2,100 sq.ft",
+    image: "/house.webp",
+
+    description:
+      "A spacious family home in LB Nagar with convenient access to schools, transport and essential services.",
+
+    bedrooms: "3 BHK",
+    bathrooms: "3",
+    area: "2,100 sq.ft",
+    propertyType: "Independent House",
+
+    highlights: [
+      "Family-friendly location",
+      "Spacious rooms",
+      "Good connectivity",
+      "Independent property",
+      "Established neighbourhood",
+      "Ideal for families",
+    ],
+  },
+
+  
+
+  {
+    id: 15,
+    title: "Premium Farm Land",
+    category: "farm",
+    categoryName: "Farm Lands",
+    location: "Shankarpally, Hyderabad",
+    price: "₹75 Lakhs",
+    details: "1 Acre • Road Facing",
+    image: "/farmland.webp",
+
+    description:
+      "A premium farm land opportunity near Shankarpally, suitable for agricultural use, weekend living or long-term investment.",
+
+    bedrooms: "-",
+    bathrooms: "-",
+    area: "1 Acre",
+    propertyType: "Farm Land",
+
+    highlights: [
+      "1 acre land",
+      "Road facing",
+      "Green surroundings",
+      "Peaceful location",
+      "Investment opportunity",
+      "Suitable for weekend living",
+    ],
+  },
+  */,
+
+  {
+    id: 2,
+    title: "Mathru Bhoomi Farm Land",
+    category: "farm",
+    categoryName: "Farm Lands",
+    location: "Khammam, Telangana",
+    price: "₹62 Lakhs",
+    details: "1 Acre • Gated Community",
+    image: "/farmland.webp",
+
+    description:
+      "Beautiful farm land in Chevella offering a peaceful environment away from the city with good future investment potential.",
+
+    bedrooms: "-",
+    bathrooms: "-",
+    area: "1 Acre",
+    propertyType: "Farm Land",
+
+    highlights: [
+      "1 acre property",
+      "Green surroundings",
+      "Peaceful location",
+      "Gated development",
+      "Investment potential",
+      "Weekend getaway opportunity",
+    ],
+  },
+];
+
+/* =========================================================
+   PAGE
+========================================================= */
 
 export default function RealEstateProjects() {
-  const [selectedProject, setSelectedProject] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState("all");
 
-  const handleEnquiry = (project) => {
-    const message = `Hello VR Group,
+  /* =======================================================
+     FILTER PROPERTIES
+  ======================================================= */
 
-I am interested in the project "${project.name}" located in ${project.location}.
+  const filteredProperties = useMemo(() => {
+    if (selectedCategory === "all") {
+      return properties;
+    }
 
-I would like to know more about the project, pricing and availability.`;
+    return properties.filter(
+      (property) => property.category === selectedCategory
+    );
+  }, [selectedCategory]);
 
-    const whatsappNumber = "919999999999";
+  /* =======================================================
+     CATEGORY CLICK
+  ======================================================= */
 
-    const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
-      message
-    )}`;
+  const handleCategoryClick = (categoryId) => {
+    setSelectedCategory(categoryId);
 
-    window.open(whatsappUrl, "_blank");
+    setTimeout(() => {
+      document
+        .getElementById("property-listings")
+        ?.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+    }, 100);
   };
 
+  /* =======================================================
+     CURRENT CATEGORY NAME
+  ======================================================= */
+
+  const currentCategoryName =
+    selectedCategory === "all"
+      ? "Explore Our Properties"
+      : categories.find(
+          (category) => category.id === selectedCategory
+        )?.name;
+
   return (
-    <main className="min-h-screen bg-[#F8F9FB] text-[#111020]">
+    <main className="min-h-screen bg-white text-[#071a33]">
 
       {/* =====================================================
           HERO
       ===================================================== */}
 
       <section
-  className="relative overflow-hidden bg-[#071a33] pt-[140px]"
+  className="relative overflow-hidden bg-[#071a33]"
   style={{
     backgroundImage: "url('/hero-property.jpg')",
     backgroundSize: "cover",
@@ -46,318 +598,426 @@ I would like to know more about the project, pricing and availability.`;
   }}
 >
   {/* Dark overlay */}
-  <div className="absolute inset-0 bg-[#071a33]/55" />
+  <div className="absolute inset-0 bg-[#071a33]/75" />
 
-  {/* Extra gradient for readability */}
+  {/* Optional subtle gradient */}
   <div className="absolute inset-0 bg-gradient-to-r from-[#071a33]/95 via-[#071a33]/70 to-[#071a33]/40" />
 
-  {/* Gold glow */}
-  <div className="absolute -right-32 -top-32 h-96 w-96 rounded-full bg-[#c9a227]/10 blur-3xl" />
+  {/* Decorative glow */}
+  <div className="absolute -right-32 -top-32 h-80 w-80 rounded-full bg-[#c9a227]/10 blur-3xl" />
 
-  {/* Blue glow */}
   <div className="absolute -bottom-40 -left-32 h-96 w-96 rounded-full bg-[#1D5FA7]/20 blur-3xl" />
 
+  {/* Hero Content */}
+  <div className="relative mx-auto max-w-7xl px-5 pb-20 pt-28 sm:px-6 sm:pb-24 lg:px-8 lg:pb-32 lg:pt-36">
 
-  {/* CONTENT */}
-  <div className="relative mx-auto max-w-7xl px-5 pb-24 sm:px-6 lg:px-8">
+    <p className="text-xs font-bold uppercase tracking-[0.25em] text-[#c9a227] sm:text-sm">
+      VR Group Real Estate
+    </p>
 
-    <div className="max-w-3xl">
+    <h1 className="mt-4 max-w-3xl font-serif text-4xl font-semibold leading-tight text-white sm:text-5xl lg:text-6xl">
+      Find a Property
+      <br />
+      <span className="text-[#c9a227]">
+        That Feels Like Home.
+      </span>
+    </h1>
 
-      {/* Small heading */}
-      <div className="mb-5 flex items-center gap-3">
-
-        <span className="h-[1px] w-10 bg-[#c9a227]" />
-
-        <span className="text-sm font-semibold uppercase tracking-[0.25em] text-[#c9a227]">
-          VR Group Real Estate
-        </span>
-
-      </div>
-
-
-      {/* Main heading */}
-      <h1 className="font-serif text-4xl font-semibold leading-tight text-white sm:text-5xl md:text-6xl">
-
-        Find a Place Worth
-
-        <span className="block text-[#c9a227]">
-          Investing In
-        </span>
-
-      </h1>
-
-
-      {/* Description */}
-      <p className="mt-6 max-w-2xl text-base leading-7 text-slate-200 sm:text-lg">
-
-        Explore carefully selected residential and real estate
-        opportunities with guidance from the VR Group team.
-
-      </p>
-
-
-      {/* CTA */}
-      <a
-        href="#projects"
-        className="mt-8 inline-flex items-center gap-2 rounded-full bg-[#c9a227] px-7 py-3.5 text-sm font-bold text-[#071a33] transition-all duration-300 hover:-translate-y-1 hover:bg-[#d9b63a] hover:shadow-xl hover:shadow-[#c9a227]/20"
-      >
-
-        Explore Projects
-
-        <ArrowRight size={17} />
-
-      </a>
-
-    </div>
+    <p className="mt-5 max-w-2xl text-sm leading-7 text-slate-200 sm:text-base sm:leading-8">
+      Explore carefully selected properties across residential,
+      commercial and investment categories.
+    </p>
 
   </div>
-
 </section>
 
-
       {/* =====================================================
-          PROJECTS
+          CATEGORY SECTION
+          IMAGE CARDS
       ===================================================== */}
 
       <section
-        id="projects"
-        className="mx-auto max-w-7xl px-5 py-20 sm:px-6 lg:px-8"
+        id="property-categories"
+        className="overflow-hidden bg-slate-50 py-14 sm:py-16 lg:py-20"
       >
 
-        {/* Section heading */}
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 
-        <div className="mb-12 flex flex-col justify-between gap-6 md:flex-row md:items-end">
+          {/* Heading */}
 
-          <div>
+          <div className="text-center">
 
-            <p className="text-sm font-bold uppercase tracking-[0.25em] text-[#c9a227]">
-              Our Projects
+            <p className="text-xs font-bold uppercase tracking-[0.25em] text-[#c9a227] sm:text-sm">
+              Explore Properties
             </p>
 
             <h2 className="mt-3 font-serif text-3xl font-semibold text-[#071a33] sm:text-4xl">
-              Discover Our Properties
+              Find the Right Property Type
             </h2>
 
-            <p className="mt-4 max-w-2xl text-sm leading-6 text-[#5F6470] sm:text-base">
-              Explore properties selected with location, quality and
-              long-term value in mind.
+            <p className="mx-auto mt-4 max-w-2xl text-sm leading-6 text-slate-600 sm:text-base sm:leading-7">
+              Choose a property category to explore available
+              properties.
             </p>
 
           </div>
 
+          {/* =================================================
+              HORIZONTAL CATEGORY SCROLLER
+          ================================================= */}
 
-          {/* Project count */}
+          <div className="mt-10 overflow-x-auto pb-5 scrollbar-hide [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
 
-          <div className="flex items-center gap-3 rounded-xl border border-[#071a33]/10 bg-white px-5 py-3 shadow-sm">
+            <div className="flex w-max gap-4 sm:gap-5">
 
-            <Building2
-              size={20}
-              className="text-[#c9a227]"
-            />
+              {categories.map((category) => {
 
-            <span className="text-sm font-semibold text-[#071a33]">
-              {projects.length} Project{projects.length !== 1 ? "s" : ""}
+                const Icon = category.icon;
+
+                const isActive =
+                  selectedCategory === category.id;
+
+                return (
+
+                  <button
+                    key={category.id}
+                    type="button"
+                    onClick={() =>
+                      handleCategoryClick(category.id)
+                    }
+                    className={`
+                      group
+                      relative
+                      h-48
+                      w-[240px]
+                      shrink-0
+                      overflow-hidden
+                      rounded-2xl
+                      text-left
+                      shadow-sm
+                      transition-all
+                      duration-300
+                      active:scale-[0.98]
+
+                      sm:h-52
+                      sm:w-[280px]
+
+                      lg:h-56
+                      lg:w-[300px]
+
+                      ${
+                        isActive
+                          ? "ring-4 ring-[#c9a227]/40"
+                          : ""
+                      }
+                    `}
+                  >
+
+                    {/* Category Image */}
+
+                    <img
+                      src={category.image}
+                      alt={category.name}
+                      loading="lazy"
+                      className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 lg:group-hover:scale-110"
+                    />
+
+                    {/* Overlay */}
+
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#071a33]/95 via-[#071a33]/40 to-transparent" />
+
+                    {/* Icon */}
+
+                    <div className="absolute left-4 top-4 flex h-10 w-10 items-center justify-center rounded-xl bg-white/95 text-[#071a33] shadow-md sm:h-11 sm:w-11">
+
+                      <Icon size={18} />
+
+                    </div>
+
+                    {/* Active Indicator */}
+
+                    {isActive && (
+
+                      <div className="absolute right-4 top-4 flex h-7 w-7 items-center justify-center rounded-full bg-[#c9a227] text-[#071a33]">
+
+                        <CheckCircle2 size={16} />
+
+                      </div>
+
+                    )}
+
+                    {/* Card Content */}
+
+                    <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-5">
+
+                      <h3 className="font-serif text-lg font-semibold text-white sm:text-xl">
+                        {category.name}
+                      </h3>
+
+                      <div className="mt-2 flex items-center gap-2 text-[11px] font-bold uppercase tracking-wide text-[#c9a227] sm:text-xs">
+
+                        {category.id === "all"
+                          ? "View All"
+                          : "View Properties"}
+
+                        <ArrowRight size={13} />
+
+                      </div>
+
+                    </div>
+
+                  </button>
+
+                );
+              })}
+
+            </div>
+
+          </div>
+
+          {/* Mobile Swipe Message */}
+
+          <div className="flex items-center justify-center gap-2 text-xs text-slate-400 sm:hidden">
+
+            <span>
+              Swipe to explore categories
             </span>
+
+            <ArrowRight size={13} />
 
           </div>
 
         </div>
 
-
-        {/* Project grid */}
-
-        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-
-          {projects.map((project) => (
-
-            <ProjectCard
-              key={project.id}
-              project={project}
-              onViewDetails={setSelectedProject}
-            />
-
-          ))}
-
-        </div>
-
       </section>
 
-
       {/* =====================================================
-          CTA
+          PROPERTY LISTINGS
       ===================================================== */}
 
-      <section className="bg-[#071a33]">
+      <section
+        id="property-listings"
+        className="scroll-mt-20 py-12 sm:py-16 lg:py-20"
+      >
 
-        <div className="mx-auto max-w-7xl px-5 py-16 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
 
-          <div className="flex flex-col justify-between gap-8 md:flex-row md:items-center">
+          {/* Section Header */}
+
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
 
             <div>
 
-              <p className="text-sm font-bold uppercase tracking-[0.25em] text-[#c9a227]">
-                Looking for a Property?
+              <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#c9a227]">
+                Properties
               </p>
 
-              <h2 className="mt-3 font-serif text-3xl font-semibold text-white">
-                Let us help you find the right opportunity.
+              <h2 className="mt-2 font-serif text-3xl font-semibold text-[#071a33] sm:text-4xl">
+                {currentCategoryName}
               </h2>
 
             </div>
 
+            <p className="text-sm text-slate-500">
 
-            <a
-              href="#contact"
-              className="inline-flex shrink-0 items-center justify-center gap-2 rounded-full bg-[#c9a227] px-7 py-3.5 text-sm font-bold text-[#071a33] transition-all duration-300 hover:bg-[#d9b63a]"
-            >
+              {filteredProperties.length}{" "}
 
-              Talk to Our Team
+              {filteredProperties.length === 1
+                ? "property"
+                : "properties"}
 
-              <ArrowRight size={17} />
-
-            </a>
+            </p>
 
           </div>
+
+          {/* =================================================
+              EMPTY STATE
+          ================================================= */}
+
+          {filteredProperties.length === 0 && (
+
+            <div className="mt-12 rounded-2xl border border-slate-200 p-10 text-center">
+
+              <Building2
+                size={40}
+                className="mx-auto text-slate-300"
+              />
+
+              <h3 className="mt-4 font-serif text-xl font-semibold">
+                No properties found
+              </h3>
+
+              <p className="mt-2 text-sm text-slate-500">
+                Please select another category.
+              </p>
+
+              <button
+                type="button"
+                onClick={() =>
+                  handleCategoryClick("all")
+                }
+                className="mt-5 rounded-full bg-[#071a33] px-5 py-3 text-sm font-bold text-white transition-colors hover:bg-[#0c294c]"
+              >
+                View All Properties
+              </button>
+
+            </div>
+
+          )}
+
+          {/* =================================================
+              PROPERTY GRID
+          ================================================= */}
+
+          {filteredProperties.length > 0 && (
+
+            <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+
+              {filteredProperties.map((property) => (
+
+                <article
+                  key={property.id}
+                  className="group overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
+                >
+
+                  {/* Image */}
+
+                  <div className="relative aspect-[4/3] overflow-hidden bg-slate-100">
+
+                    <img
+                      src={property.image}
+                      alt={property.title}
+                      loading="lazy"
+                      className="h-full w-full object-cover transition-transform duration-500 lg:group-hover:scale-105"
+                    />
+
+                    {/* Overlay */}
+
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#071a33]/50 via-transparent to-transparent" />
+
+                    {/* Category */}
+
+                    <div className="absolute left-4 top-4">
+
+                      <span className="rounded-full bg-white/95 px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-[#071a33] shadow-sm">
+
+                        {property.categoryName}
+
+                      </span>
+
+                    </div>
+
+                    {/* Available */}
+
+                    <div className="absolute bottom-4 left-4 flex items-center gap-1.5 rounded-full bg-white/95 px-3 py-1.5 text-[10px] font-bold text-green-700 shadow-sm">
+
+                      <CheckCircle2 size={12} />
+
+                      Available
+
+                    </div>
+
+                  </div>
+
+                  {/* Card Content */}
+
+                  <div className="p-5 sm:p-6">
+
+                    <h3 className="font-serif text-xl font-semibold text-[#071a33]">
+
+                      {property.title}
+
+                    </h3>
+
+                    {/* Location */}
+
+                    <div className="mt-2 flex items-center gap-1.5 text-sm text-slate-500">
+
+                      <MapPin
+                        size={15}
+                        className="shrink-0 text-[#c9a227]"
+                      />
+
+                      {property.location}
+
+                    </div>
+
+                    {/* Price */}
+
+                    <div className="mt-5 border-t border-slate-100 pt-5">
+
+                      <p className="text-lg font-bold text-[#071a33]">
+                        {property.price}
+                      </p>
+
+                      <p className="mt-1 text-xs text-slate-500">
+                        {property.details}
+                      </p>
+
+                    </div>
+
+                    {/* MORE INFO */}
+
+                    <Link
+                      to={`/real-estate/property/${property.id}`}
+                      className="mt-5 inline-flex items-center gap-2 text-sm font-bold text-[#1D5FA7] transition-all duration-300 hover:gap-3 hover:text-[#071a33]"
+                    >
+
+                      More Info
+
+                      <ArrowUpRight size={16} />
+
+                    </Link>
+
+                  </div>
+
+                </article>
+
+              ))}
+
+            </div>
+
+          )}
 
         </div>
 
       </section>
 
-
       {/* =====================================================
-          PROJECT MODAL
+          BOTTOM CTA
       ===================================================== */}
 
-      {selectedProject && (
+      <section className="bg-[#071a33] py-14 sm:py-16">
 
-        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-[#071a33]/80 px-4 py-6 backdrop-blur-sm">
+        <div className="mx-auto max-w-4xl px-5 text-center sm:px-6">
 
-          <div className="relative max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-2xl bg-white shadow-2xl">
+          <p className="text-xs font-bold uppercase tracking-[0.25em] text-[#c9a227]">
+            Need Help?
+          </p>
 
-            {/* Close */}
+          <h2 className="mt-3 font-serif text-3xl font-semibold text-white sm:text-4xl">
+            Not sure which property is right for you?
+          </h2>
 
-            <button
-              onClick={() => setSelectedProject(null)}
-              className="absolute right-4 top-4 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-[#071a33]/80 text-white transition-colors hover:bg-[#c9a227] hover:text-[#071a33]"
-              aria-label="Close"
-            >
+          <p className="mx-auto mt-4 max-w-xl text-sm leading-7 text-slate-300">
+            Talk to our team and we'll help you find a property
+            that matches your requirements.
+          </p>
 
-              <X size={20} />
+          <a
+            href="/#contact"
+            className="mt-7 inline-flex items-center gap-2 rounded-full bg-[#c9a227] px-7 py-3.5 text-sm font-bold text-[#071a33] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#d9b63a]"
+          >
 
-            </button>
+            Talk to Us
 
+            <ArrowUpRight size={17} />
 
-            {/* Image */}
-
-            <div className="h-64 overflow-hidden sm:h-80">
-
-              <img
-                src={selectedProject.image}
-                alt={selectedProject.name}
-                className="h-full w-full object-cover"
-              />
-
-            </div>
-
-
-            {/* Content */}
-
-            <div className="p-6 sm:p-8">
-
-              <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#c9a227]">
-                {selectedProject.type}
-              </p>
-
-              <h2 className="mt-2 font-serif text-3xl font-semibold text-[#071a33]">
-                {selectedProject.name}
-              </h2>
-
-
-              <div className="mt-3 flex items-center gap-2 text-sm text-[#5F6470]">
-
-                <MapPin
-                  size={16}
-                  className="text-[#c9a227]"
-                />
-
-                {selectedProject.location}
-
-              </div>
-
-
-              <p className="mt-6 text-sm leading-7 text-[#5F6470]">
-                {selectedProject.description}
-              </p>
-
-
-              {/* Details */}
-
-              <div className="mt-7 grid grid-cols-2 gap-4">
-
-                <div className="rounded-xl bg-[#F5F7FA] p-4">
-
-                  <p className="text-xs uppercase tracking-wider text-[#5F6470]">
-                    Area
-                  </p>
-
-                  <p className="mt-1 text-sm font-bold text-[#071a33]">
-                    {selectedProject.area}
-                  </p>
-
-                </div>
-
-
-                <div className="rounded-xl bg-[#F5F7FA] p-4">
-
-                  <p className="text-xs uppercase tracking-wider text-[#5F6470]">
-                    Starting Price
-                  </p>
-
-                  <p className="mt-1 text-sm font-bold text-[#071a33]">
-                    {selectedProject.price}
-                  </p>
-
-                </div>
-
-              </div>
-
-
-              {/* Actions */}
-
-              <div className="mt-7 grid gap-3 sm:grid-cols-2">
-
-                <button
-                  onClick={() => handleEnquiry(selectedProject)}
-                  className="flex items-center justify-center gap-2 rounded-xl bg-[#c9a227] px-5 py-3.5 text-sm font-bold text-[#071a33] transition-colors hover:bg-[#d9b63a]"
-                >
-
-                  <MessageCircle size={17} />
-
-                  WhatsApp Enquiry
-
-                </button>
-
-
-                <a
-                  href="tel:+919999999999"
-                  className="flex items-center justify-center gap-2 rounded-xl bg-[#071a33] px-5 py-3.5 text-sm font-bold text-white transition-colors hover:bg-[#1D5FA7]"
-                >
-
-                  <Phone size={17} />
-
-                  Call Us
-
-                </a>
-
-              </div>
-
-            </div>
-
-          </div>
+          </a>
 
         </div>
 
-      )}
+      </section>
 
     </main>
   );
