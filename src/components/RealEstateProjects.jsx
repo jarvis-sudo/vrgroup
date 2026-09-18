@@ -55,12 +55,13 @@ const categories = [
     image: "/house.webp",
     icon: Home,
   },
-  {
+ /* {
     id: "farm",
     name: "Farm Lands",
     image: "/farmland.webp",
     icon: Trees,
   },
+  */
 ];
 
 /* =========================================================
@@ -99,411 +100,6 @@ const properties = [
       "Close to major IT corridors",
     ],
   },
-  /*
-
-  {
-    id: 2,
-    title: "Luxury 2 BHK Apartments",
-    category: "apartments",
-    categoryName: "Flats & Apartments",
-    location: "Narsingi, Hyderabad",
-    price: "₹85 Lakhs",
-    details: "2 BHK • 2 Baths • 1,350 sq.ft",
-    image: "/apartments.avif",
-
-    description:
-      "Well-designed 2 BHK apartments located in Narsingi with convenient access to schools, workplaces, shopping and major roads.",
-
-    bedrooms: "2 BHK",
-    bathrooms: "2",
-    area: "1,350 sq.ft",
-    propertyType: "Apartment",
-
-    highlights: [
-      "Prime Narsingi location",
-      "Well-planned interiors",
-      "Excellent road connectivity",
-      "Modern amenities",
-      "Ideal for families",
-      "Strong investment potential",
-    ],
-  },
-
-  {
-    id: 3,
-    title: "Premium 4 BHK Apartments",
-    category: "apartments",
-    categoryName: "Flats & Apartments",
-    location: "Financial District, Hyderabad",
-    price: "₹1.85 Cr",
-    details: "4 BHK • 4 Baths • 2,650 sq.ft",
-    image: "/apartments.avif",
-
-    description:
-      "Spacious 4 BHK apartments in the Financial District offering a premium lifestyle and convenient access to Hyderabad's major business hubs.",
-
-    bedrooms: "4 BHK",
-    bathrooms: "4",
-    area: "2,650 sq.ft",
-    propertyType: "Apartment",
-
-    highlights: [
-      "Located in Financial District",
-      "Large floor plans",
-      "Premium residential development",
-      "Excellent connectivity",
-      "Luxury lifestyle",
-      "Ideal for premium buyers",
-    ],
-  },
-
-  
-
-  {
-    id: 4,
-    title: "Luxury Villa Community",
-    category: "villas",
-    categoryName: "Villas",
-    location: "Tellapur, Hyderabad",
-    price: "₹2.40 Cr",
-    details: "4 BHK • 4 Baths • 3,200 sq.ft",
-    image: "/villa.webp",
-
-    description:
-      "A premium villa opportunity in Tellapur offering spacious interiors, privacy and a comfortable community lifestyle.",
-
-    bedrooms: "4 BHK",
-    bathrooms: "4",
-    area: "3,200 sq.ft",
-    propertyType: "Villa",
-
-    highlights: [
-      "Premium villa community",
-      "Spacious floor plans",
-      "Private living spaces",
-      "Gated community",
-      "Modern infrastructure",
-      "Excellent location",
-    ],
-  },
-
-  {
-    id: 5,
-    title: "Premium Independent Villa",
-    category: "villas",
-    categoryName: "Villas",
-    location: "Kollur, Hyderabad",
-    price: "₹1.95 Cr",
-    details: "4 BHK • 4 Baths • 2,850 sq.ft",
-    image: "/villa.webp",
-
-    description:
-      "Beautiful independent villa opportunity in Kollur with spacious rooms and a peaceful residential environment.",
-
-    bedrooms: "4 BHK",
-    bathrooms: "4",
-    area: "2,850 sq.ft",
-    propertyType: "Villa",
-
-    highlights: [
-      "Independent villa",
-      "Peaceful location",
-      "Spacious interiors",
-      "Gated surroundings",
-      "Good connectivity",
-      "Ideal for families",
-    ],
-  },
-
-  {
-    id: 6,
-    title: "Modern Luxury Villas",
-    category: "villas",
-    categoryName: "Villas",
-    location: "Mokila, Hyderabad",
-    price: "₹2.75 Cr",
-    details: "5 BHK • 5 Baths • 3,800 sq.ft",
-    image: "/villa.webp",
-
-    description:
-      "Large luxury villas in Mokila offering generous living spaces and a premium residential lifestyle.",
-
-    bedrooms: "5 BHK",
-    bathrooms: "5",
-    area: "3,800 sq.ft",
-    propertyType: "Villa",
-
-    highlights: [
-      "Luxury villa",
-      "Large built-up area",
-      "Premium neighbourhood",
-      "Spacious rooms",
-      "Private lifestyle",
-      "Long-term investment opportunity",
-    ],
-  },
-
- 
-
-  {
-    id: 7,
-    title: "Premium Residential Plots",
-    category: "plots",
-    categoryName: "Residential Plots",
-    location: "Shadnagar, Hyderabad",
-    price: "₹45 Lakhs",
-    details: "200 Sq. Yards • Gated Community",
-    image: "/open-plots.avif",
-
-    description:
-      "Premium residential plots suitable for building your future home or making a long-term real estate investment.",
-
-    bedrooms: "-",
-    bathrooms: "-",
-    area: "200 Sq. Yards",
-    propertyType: "Residential Plot",
-
-    highlights: [
-      "Residential plots",
-      "Gated community",
-      "Good road connectivity",
-      "Suitable for future construction",
-      "Investment opportunity",
-      "Growing location",
-    ],
-  },
-
-  {
-    id: 8,
-    title: "HMDA Approved Plots",
-    category: "plots",
-    categoryName: "Residential Plots",
-    location: "Maheshwaram, Hyderabad",
-    price: "₹38 Lakhs",
-    details: "180 Sq. Yards • HMDA Approved",
-    image: "/open-plots.avif",
-
-    description:
-      "Residential plots in Maheshwaram offering an opportunity for home construction and long-term investment.",
-
-    bedrooms: "-",
-    bathrooms: "-",
-    area: "180 Sq. Yards",
-    propertyType: "Residential Plot",
-
-    highlights: [
-      "HMDA approved",
-      "Residential development",
-      "Good connectivity",
-      "Growing location",
-      "Investment potential",
-      "Suitable for home construction",
-    ],
-  },
-
-  {
-    id: 9,
-    title: "Premium Gated Plots",
-    category: "plots",
-    categoryName: "Residential Plots",
-    location: "Yadagirigutta, Telangana",
-    price: "₹32 Lakhs",
-    details: "200 Sq. Yards • Gated Community",
-    image: "/open-plots.avif",
-
-    description:
-      "Well-planned residential plots in a gated community, suitable for future residential development.",
-
-    bedrooms: "-",
-    bathrooms: "-",
-    area: "200 Sq. Yards",
-    propertyType: "Residential Plot",
-
-    highlights: [
-      "Gated community",
-      "Residential plots",
-      "Planned development",
-      "Good connectivity",
-      "Affordable investment",
-      "Future growth potential",
-    ],
-  },
-
-  
-
-  {
-    id: 10,
-    title: "Premium Office Space",
-    category: "commercial",
-    categoryName: "Commercial Spaces",
-    location: "Gachibowli, Hyderabad",
-    price: "₹1.80 Cr",
-    details: "1,800 sq.ft • Commercial",
-    image: "/commercial-space.png",
-
-    description:
-      "Premium commercial office space located in Gachibowli, suitable for businesses and investors looking for a strategic location.",
-
-    bedrooms: "-",
-    bathrooms: "-",
-    area: "1,800 sq.ft",
-    propertyType: "Commercial",
-
-    highlights: [
-      "Prime commercial location",
-      "Suitable for offices",
-      "Excellent connectivity",
-      "Business-friendly location",
-      "Investment opportunity",
-      "Close to IT corridor",
-    ],
-  },
-
-  {
-    id: 11,
-    title: "Prime Retail Space",
-    category: "commercial",
-    categoryName: "Commercial Spaces",
-    location: "Kondapur, Hyderabad",
-    price: "₹2.10 Cr",
-    details: "1,500 sq.ft • Retail",
-    image: "/commercial-space.pngg",
-
-    description:
-      "Prime retail property in Kondapur suitable for businesses looking for visibility and strong connectivity.",
-
-    bedrooms: "-",
-    bathrooms: "-",
-    area: "1,500 sq.ft",
-    propertyType: "Commercial",
-
-    highlights: [
-      "Prime retail location",
-      "Good visibility",
-      "High-growth neighbourhood",
-      "Excellent connectivity",
-      "Business opportunity",
-      "Investment potential",
-    ],
-  },
-
-  {
-    id: 12,
-    title: "Commercial Investment Property",
-    category: "commercial",
-    categoryName: "Commercial Spaces",
-    location: "Madhapur, Hyderabad",
-    price: "₹3.25 Cr",
-    details: "2,500 sq.ft • Commercial",
-    image: "/commercial-space.png",
-
-    description:
-      "A commercial investment opportunity in Madhapur located close to major business and technology hubs.",
-
-    bedrooms: "-",
-    bathrooms: "-",
-    area: "2,500 sq.ft",
-    propertyType: "Commercial",
-
-    highlights: [
-      "Madhapur location",
-      "Strong commercial demand",
-      "Large floor area",
-      "Business-friendly location",
-      "Investment opportunity",
-      "Excellent connectivity",
-    ],
-  },
-
-  
-
-  {
-    id: 13,
-    title: "Premium Independent House",
-    category: "houses",
-    categoryName: "Independent Houses",
-    location: "Manikonda, Hyderabad",
-    price: "₹1.65 Cr",
-    details: "4 BHK • 4 Baths • 2,500 sq.ft",
-    image: "/house.webp",
-
-    description:
-      "Spacious independent house in Manikonda offering comfortable family living with excellent access to nearby areas.",
-
-    bedrooms: "4 BHK",
-    bathrooms: "4",
-    area: "2,500 sq.ft",
-    propertyType: "Independent House",
-
-    highlights: [
-      "Independent house",
-      "Spacious interiors",
-      "Family-friendly neighbourhood",
-      "Good connectivity",
-      "Residential location",
-      "Long-term value",
-    ],
-  },
-
-  {
-    id: 14,
-    title: "Spacious Family Home",
-    category: "houses",
-    categoryName: "Independent Houses",
-    location: "LB Nagar, Hyderabad",
-    price: "₹1.15 Cr",
-    details: "3 BHK • 3 Baths • 2,100 sq.ft",
-    image: "/house.webp",
-
-    description:
-      "A spacious family home in LB Nagar with convenient access to schools, transport and essential services.",
-
-    bedrooms: "3 BHK",
-    bathrooms: "3",
-    area: "2,100 sq.ft",
-    propertyType: "Independent House",
-
-    highlights: [
-      "Family-friendly location",
-      "Spacious rooms",
-      "Good connectivity",
-      "Independent property",
-      "Established neighbourhood",
-      "Ideal for families",
-    ],
-  },
-
-  
-
-  {
-    id: 15,
-    title: "Premium Farm Land",
-    category: "farm",
-    categoryName: "Farm Lands",
-    location: "Shankarpally, Hyderabad",
-    price: "₹75 Lakhs",
-    details: "1 Acre • Road Facing",
-    image: "/farmland.webp",
-
-    description:
-      "A premium farm land opportunity near Shankarpally, suitable for agricultural use, weekend living or long-term investment.",
-
-    bedrooms: "-",
-    bathrooms: "-",
-    area: "1 Acre",
-    propertyType: "Farm Land",
-
-    highlights: [
-      "1 acre land",
-      "Road facing",
-      "Green surroundings",
-      "Peaceful location",
-      "Investment opportunity",
-      "Suitable for weekend living",
-    ],
-  },
-  */,
-
   {
     id: 2,
     title: "Mathru Bhoomi Farm Land",
@@ -588,7 +184,7 @@ export default function RealEstateProjects() {
       {/* =====================================================
           HERO
       ===================================================== */}
-
+{/*
       <section
   className="relative overflow-hidden bg-[#071a33]"
   style={{
@@ -597,18 +193,18 @@ export default function RealEstateProjects() {
     backgroundPosition: "center",
   }}
 >
-  {/* Dark overlay */}
+  
   <div className="absolute inset-0 bg-[#071a33]/75" />
 
-  {/* Optional subtle gradient */}
+  
   <div className="absolute inset-0 bg-gradient-to-r from-[#071a33]/95 via-[#071a33]/70 to-[#071a33]/40" />
 
-  {/* Decorative glow */}
+  
   <div className="absolute -right-32 -top-32 h-80 w-80 rounded-full bg-[#c9a227]/10 blur-3xl" />
 
   <div className="absolute -bottom-40 -left-32 h-96 w-96 rounded-full bg-[#1D5FA7]/20 blur-3xl" />
 
-  {/* Hero Content */}
+  
   <div className="relative mx-auto max-w-7xl px-5 pb-20 pt-28 sm:px-6 sm:pb-24 lg:px-8 lg:pb-32 lg:pt-36">
 
     <p className="text-xs font-bold uppercase tracking-[0.25em] text-[#c9a227] sm:text-sm">
@@ -630,6 +226,9 @@ export default function RealEstateProjects() {
 
   </div>
 </section>
+*/}
+
+
 
       {/* =====================================================
           CATEGORY SECTION

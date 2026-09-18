@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Menu,
   X,
@@ -11,6 +11,7 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const closeTimeout = useRef(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -126,50 +127,56 @@ export default function Navbar() {
               />
             </Link>
 
+            
+
 
             {/* ABOUT */}
 
-            <a
-              href="/#about"
+            <Link
+              to="/about"
               className={`text-sm font-medium transition-colors duration-300 ${navText}`}
             >
               About Us
-            </a>
+            </Link>
 
 
-            {/* =========================
-                SERVICES DROPDOWN
-            ========================== */}
+       {/* =========================
+    SERVICES DROPDOWN
+========================== */}
 
-            <div
-              className="relative"
-              onMouseEnter={() => setServicesOpen(true)}
-              onMouseLeave={() => setServicesOpen(false)}
-            >
+<div
+  className="relative"
+  onMouseEnter={() => {
+    if (closeTimeout.current) clearTimeout(closeTimeout.current);
+    setServicesOpen(true);
+  }}
+  onMouseLeave={() => {
+    closeTimeout.current = setTimeout(() => setServicesOpen(false), 150);
+  }}
+>
+  <button
+    type="button"
+    className={`flex items-center gap-1.5 text-sm font-medium transition-colors duration-300 ${navText}`}
+  >
+    Services
+    <ChevronDown
+      size={15}
+      className={`transition-transform duration-300 ${
+        servicesOpen ? "rotate-180" : ""
+      }`}
+    />
+  </button>
 
-              <button
-                type="button"
-                className={`flex items-center gap-1.5 text-sm font-medium transition-colors duration-300 ${navText}`}
-              >
-
-                Services
-
-                <ChevronDown
-                  size={15}
-                  className={`transition-transform duration-300 ${
-                    servicesOpen
-                      ? "rotate-180"
-                      : ""
-                  }`}
-                />
-
-              </button>
+  {/* Dropdown panel — no margin-top, use padding-top to keep hover zone continuous */}
+  {servicesOpen && (
+    <div className="absolute left-1/2 top-full w-72 -translate-x-1/2 pt-5">
+      <div className="rounded-2xl border border-[#111020]/10 bg-white p-2 shadow-2xl">
 
 
-              {servicesOpen && (
+           {/*   {servicesOpen && (
 
                 <div className="absolute left-1/2 top-full mt-5 w-72 -translate-x-1/2 rounded-2xl border border-[#111020]/10 bg-white p-2 shadow-2xl">
-
+*/}
                   {/* Study Abroad */}
 
                   <a
@@ -198,7 +205,7 @@ export default function Navbar() {
 
 
                   {/* Education Loans */}
-
+{/*
                   <a
                     href="/#loans"
                     className="group block rounded-xl px-4 py-3 transition-all duration-200 hover:bg-[#F5F7FA]"
@@ -222,7 +229,7 @@ export default function Navbar() {
                     </p>
 
                   </a>
-
+*/}
 
                   {/* Real Estate */}
 
@@ -252,6 +259,7 @@ export default function Navbar() {
                   </Link>
 
                 </div>
+                </div>
 
               )}
 
@@ -259,14 +267,14 @@ export default function Navbar() {
 
 
             {/* PROPERTIES */}
-
+{/*
             <Link
               to="/real-estate/projects"
               className={`text-sm font-medium transition-colors duration-300 ${navText}`}
             >
               Properties
             </Link>
-
+*/}
 
             {/* CONTACT */}
 
@@ -351,7 +359,7 @@ export default function Navbar() {
                 Home
               </Link>
 
-
+{/*
               <a
                 href="/#about"
                 onClick={closeMobileMenu}
@@ -359,7 +367,7 @@ export default function Navbar() {
               >
                 About Us
               </a>
-
+*/}
 
               <a
                 href="/#study-abroad"
@@ -369,7 +377,7 @@ export default function Navbar() {
                 Study Abroad
               </a>
 
-
+{/*
               <a
                 href="/#loans"
                 onClick={closeMobileMenu}
@@ -377,7 +385,7 @@ export default function Navbar() {
               >
                 Education Loans
               </a>
-
+*/}
 
               <Link
                 to="/real-estate/projects"
@@ -387,7 +395,7 @@ export default function Navbar() {
                 Real Estate
               </Link>
 
-
+{/*
               <Link
                 to="/real-estate/projects"
                 onClick={closeMobileMenu}
@@ -396,7 +404,7 @@ export default function Navbar() {
                 Properties
               </Link>
 
-
+*/}
               <a
                 href="/#contact"
                 onClick={closeMobileMenu}

@@ -3,10 +3,13 @@ import {  Routes, Route } from "react-router-dom";
 import ContactPopup from "./components/ContactPopup";
 import Hero from "./components/Hero";
 import Navbar from "./components/Navbar";
-import RealEstateProjects from "./pages/RealEstateProjects";
+import RealEstateProjects from "./components/RealEstateProjects";
 import Home from "./pages/Home";
 import Footer from "./components/Footer";
-import PropertyDetails from "./pages/PropertyDetails"
+import PropertyDetails from "./components/PropertyDetails";
+import RealEstate from "./pages/RealEstate"
+import About from "./pages/About";
+import CyberHomesTowersPage from "./components/CyberHomesTowersPage";
 
 
 
@@ -26,7 +29,7 @@ function App() {
         {/* Real Estate Projects */}
         <Route
           path="/real-estate/projects"
-          element={<RealEstateProjects />}
+          element={<RealEstate/>}
         />
          {/* Property Details */}
         <Route
@@ -34,7 +37,17 @@ function App() {
           element={<PropertyDetails />}
         />
 
+        <Route
+        path="/about"
+        element={<Home/>}
+        />
+        <Route
+        path="/real-estate/projects/cyber-homes"
+        element={<CyberHomesTowersPage/>}
+        />
+
       </Routes>
+      <Footer/>
       
 </>
     

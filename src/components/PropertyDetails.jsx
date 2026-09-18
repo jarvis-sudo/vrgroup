@@ -442,12 +442,12 @@ const properties = [
 
   {
     id: 16,
-    title: "Green Valley Farm Land",
-    category: "Farm Lands",
+    title: "Green Valley villas",
+    category: "villas",
     location: "Chevella, Telangana",
     price: "₹62 Lakhs",
     details: "1 Acre • Gated Community",
-    image: "/farmland.webp",
+    image: "/villa.webp",
 
     description:
       "Beautiful farm land in Chevella offering a peaceful environment away from the city with good future investment potential.",
